@@ -4,7 +4,7 @@
 // @version       1.0
 // @namespace     http://www.flipkart.com/
 // @description	  Code Review Checklist for Flipkart Warehouse team
-// @updateURL     https://github.com/parasnarang
+// @updateURL     https://github.com/parasnarang/GitHub-Code-Review-Checklist/raw/master/GitHub%20Code%20Review%20Checklist.user.js
 // @include       http*://github.com/Flipkart/*/pull/*
 // ==/UserScript==
 
