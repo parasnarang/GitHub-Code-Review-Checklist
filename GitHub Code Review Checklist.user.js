@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          GitHub Code Review Checklist
 // @author        Paras Narang
-// @version       1.7
+// @version       1.8
 // @namespace     http://www.flipkart.com/
 // @description	  Code Review Checklist for Flipkart Warehouse team
 // @updateURL     https://github.com/parasnarang/GitHub-Code-Review-Checklist/raw/master/GitHub%20Code%20Review%20Checklist.user.js
