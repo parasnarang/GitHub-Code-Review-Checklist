@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          GitHub Code Review Checklist
 // @author        Paras Narang
-// @version       1.1
+// @version       1.2
 // @namespace     http://www.flipkart.com/
 // @description	  Code Review Checklist for Flipkart Warehouse team
 // @updateURL     https://github.com/parasnarang/GitHub-Code-Review-Checklist/raw/master/GitHub%20Code%20Review%20Checklist.user.js
@@ -127,7 +127,10 @@ function registerMenuToggle() {
     $('#shipItButton').click(function() {
         $('#reviewerTypeMenu').toggle();
         $.each(['Functional', 'Technical', 'Performance'], function( index, reviewerType ) {
-            $('#' + reviewerType + 'Form').hide();
+            if($('#' + reviewerType + 'Form').is(":visible")){
+                $('#reviewerTypeMenu').hide(); 
+                $('#' + reviewerType + 'Form').hide();
+            }
         });
     });
 }
@@ -151,9 +154,6 @@ function constructShipItMessage(reviewerType) {
     var username = $('.header-nav-current-user .css-truncate-target').first().text();
     var message = reviewerType + " Review by " + username + "\n\n";
     $.each($('#' + reviewerType +'Form').find(':input'), function (index, element) {
-        console.log(element.checked);
-        console.log(element.value);
-        console.log('aaa');
         value = element.checked ? " :white_check_mark: " : " :red_circle: ";
         message = message + value + " | " + element.value + "\n";
     });
