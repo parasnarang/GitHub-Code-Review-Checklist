@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          GitHub Code Review Checklist
 // @author        Paras Narang
-// @version       1.0
+// @version       1.1
 // @namespace     http://www.flipkart.com/
 // @description	  Code Review Checklist for Flipkart Warehouse team
 // @updateURL     https://github.com/parasnarang/GitHub-Code-Review-Checklist/raw/master/GitHub%20Code%20Review%20Checklist.user.js
@@ -70,15 +70,21 @@ function addReviewChecklists() {
             zIndex: 10,
             display: 'none'
         });
-        var checklistItems = checklistItemsArray.map (function(value) {
-            return $('<label class="menu-item"> <input type="checkbox" value="' + value + '"> ' + value + '</label>');
-        }, '');
+        var checklistItems = [];
+        var backgroundColor = "#f7f7f7";
+        $.each(checklistItemsArray, function(index, value) {
+            backgroundColor = (index % 2) ? "#f7f7f7" : "#fff";
+            checklistItems.push( $('<label class="menu-item" style="background: ' + backgroundColor + ';font-weight: normal;"><input type="checkbox" value="' + 
+                                   value + 
+                                   '"> ' + value + '</label>'));
+        });
         var checklistTitle = $('<span class="menu-heading">Checklist : ' + reviewerType + ' Review</span>').css('textTransform', 'capitalize');
         checklistForm.append(checklistTitle);
         $.each(checklistItems, function( index, checklistItem ) {
             checklistForm.append(checklistItem);
         });
-        var checklistSubmit = $('<center><a id="' + 
+        backgroundColor = backgroundColor=="#f7f7f7" ? "#fff" : "f7f7f7"; 
+        var checklistSubmit = $('<center><a style="width:100%;" id="' + 
                                 reviewerType + 
                                 'ChecklistShipIt" class="btn btn-sm btn-primary tooltipped tooltipped-n" aria-label="Post Comment">Ship it!</a></center>');
         checklistForm.append(checklistSubmit);
@@ -100,9 +106,9 @@ function addReviewerTypeMenu() {
     var reviewerTypeMenuHTML = (function reviewerTypeMenuHTML() {
         return '<nav class="menu">' +
             '<span class="menu-heading">Choose</span>' +
-            '<a id="FunctionalReviewer" class="menu-item">Functional Reviewer</a>' +
-            '<a id="TechnicalReviewer" class="menu-item">Technical Reviewer</a>' +
-            '<a id="PerformanceReviewer" class="menu-item">Performance Reviewer</a>' +
+            '<a id="FunctionalReviewer" class="menu-item">Functional Review</a>' +
+            '<a id="TechnicalReviewer" class="menu-item">Technical Review</a>' +
+            '<a id="PerformanceReviewer" class="menu-item">Performance Review</a>' +
             '</nav>';
     })();
     var reviewerTypeMenu = document.createElement("div");
