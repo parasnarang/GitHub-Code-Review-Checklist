@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          GitHub Code Review Checklist
 // @author        Paras Narang
-// @version       1.6
+// @version       1.7
 // @namespace     http://www.flipkart.com/
 // @description	  Code Review Checklist for Flipkart Warehouse team
 // @updateURL     https://github.com/parasnarang/GitHub-Code-Review-Checklist/raw/master/GitHub%20Code%20Review%20Checklist.user.js
@@ -106,7 +106,7 @@ function addReviewChecklists() {
 }
 
 function addShipItButton() {
-    var shipItButton = $('<a id="shipItButton" class="btn btn-big tooltipped tooltipped-n" aria-label="Code Review Checklist">Ship it Checklist</a>');
+    var shipItButton = $('<a id="shipItButton" class="btn btn-big tooltipped tooltipped-n" aria-label="Code Review Checklist">Review Checklist</a>');
     shipItButton.css({
         position: 'fixed',
         bottom: 20,
