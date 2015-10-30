@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          GitHub Code Review Checklist
 // @author        Paras Narang
-// @version       1.2
+// @version       1.4
 // @namespace     http://www.flipkart.com/
 // @description	  Code Review Checklist for Flipkart Warehouse team
 // @updateURL     https://github.com/parasnarang/GitHub-Code-Review-Checklist/raw/master/GitHub%20Code%20Review%20Checklist.user.js
@@ -71,29 +71,42 @@ function addReviewChecklists() {
             display: 'none'
         });
         var checklistItems = [];
-        var backgroundColor = "#f7f7f7";
         $.each(checklistItemsArray, function(index, value) {
-            backgroundColor = (index % 2) ? "#f7f7f7" : "#fff";
-            checklistItems.push( $('<label class="menu-item" style="background: ' + backgroundColor + ';font-weight: normal;"><input type="checkbox" value="' + 
-                                   value + 
-                                   '"> ' + value + '</label>'));
+            var backgroundColor = (index % 2) ? "#f7f7f7" : "#fff";
+            checklistItems.push( $(
+                '<div class="menu-item columns" style="background: ' + backgroundColor + ';">' +
+                '<label class="four-fifths column" style="font-weight: normal; text-align: justify;" >' +
+                '<input type="checkbox" value="' + value + '"> ' + value +
+                '</label>' +
+                '<a id="' + reviewerType + index + 'CommentButton" class="one-fifth column octicon octicon-comment" style="cursor: pointer; cursor: hand;">' +
+                '</a>' +
+                '</div>' +
+                '<input type="text" class="input-mini input-block" style="display: none;" id="' + reviewerType + index + 'CommentInput" placeholder="Enter Comments here..">'
+            ));
         });
-        var checklistTitle = $('<span class="menu-heading">Checklist : ' + reviewerType + ' Review</span>').css('textTransform', 'capitalize');
+        var checklistTitle = $('<span class="menu-heading" style="">Checklist : ' + reviewerType + ' Review</span>').css('textTransform', 'capitalize');
         checklistForm.append(checklistTitle);
         $.each(checklistItems, function( index, checklistItem ) {
             checklistForm.append(checklistItem);
         });
-        backgroundColor = backgroundColor=="#f7f7f7" ? "#fff" : "f7f7f7"; 
         var checklistSubmit = $('<center><a style="width:100%;" id="' + 
                                 reviewerType + 
                                 'ChecklistShipIt" class="btn btn-sm btn-primary tooltipped tooltipped-n" aria-label="Post Comment">Ship it!</a></center>');
         checklistForm.append(checklistSubmit);
         $('body').append(checklistForm);
+        $.each(checklistItems, function( index, checklistItem ) {
+            $('#' + reviewerType + index + 'CommentButton').click(function() {
+                $('#' + reviewerType + index + 'CommentInput').toggle();
+                if($('#' + reviewerType + index + 'CommentInput').is(':visible')){
+                    $('#' + reviewerType + index + 'CommentInput').focus();
+                }
+            });
+        });
     });
 }
 
 function addShipItButton() {
-    var shipItButton = $('<a id="shipItButton" class="btn btn-big tooltipped tooltipped-n" aria-label="Code Review Checklist">Ship it!</a>');
+    var shipItButton = $('<a id="shipItButton" class="btn btn-big tooltipped tooltipped-n" aria-label="Code Review Checklist">Ship it Checklist</a>');
     shipItButton.css({
         position: 'fixed',
         bottom: 20,
@@ -104,11 +117,14 @@ function addShipItButton() {
 
 function addReviewerTypeMenu() {
     var reviewerTypeMenuHTML = (function reviewerTypeMenuHTML() {
+        var elements = [];
+        $.each(['Functional', 'Technical', 'Performance'], function( index, reviewerType ) {
+            elements.push('<a id="' + reviewerType + 'Reviewer" class="menu-item" style="cursor: pointer; cursor: hand;">' + reviewerType + 'Review</a>');
+        });
+
         return '<nav class="menu">' +
             '<span class="menu-heading">Choose</span>' +
-            '<a id="FunctionalReviewer" class="menu-item">Functional Review</a>' +
-            '<a id="TechnicalReviewer" class="menu-item">Technical Review</a>' +
-            '<a id="PerformanceReviewer" class="menu-item">Performance Review</a>' +
+            elements.join("") +
             '</nav>';
     })();
     var reviewerTypeMenu = document.createElement("div");
@@ -154,8 +170,13 @@ function constructShipItMessage(reviewerType) {
     var username = $('.header-nav-current-user .css-truncate-target').first().text();
     var message = reviewerType + " Review by " + username + "\n\n";
     $.each($('#' + reviewerType +'Form').find(':input'), function (index, element) {
-        value = element.checked ? " :white_check_mark: " : " :red_circle: ";
-        message = message + value + " | " + element.value + "\n";
+        if(element.type == 'checkbox'){
+            value = element.checked ? " :white_check_mark: " : " :red_circle: ";
+            message = message + value + " | " + element.value + "\n";
+        }
+        if(element.type == 'text' && element.value.length > 0){
+            message = message + " Comments : " + element.value + "\n";
+        }
     });
     return message;
 }
