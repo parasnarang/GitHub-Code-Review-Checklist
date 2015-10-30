@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          GitHub Code Review Checklist
 // @author        Paras Narang
-// @version       1.5
+// @version       1.6
 // @namespace     http://www.flipkart.com/
 // @description	  Code Review Checklist for Flipkart Warehouse team
 // @updateURL     https://github.com/parasnarang/GitHub-Code-Review-Checklist/raw/master/GitHub%20Code%20Review%20Checklist.user.js
@@ -164,11 +164,13 @@ function registerChecklistsToggle() {
 function createShipItComment(message) {
     var commentForm = $( "textarea[name='comment[body]']" ).first();
     commentForm.val(message);
-    commentForm.closest("form").submit();
+   // commentForm.closest("form").submit();
 
     var url = $(location).attr('href');
     url = url.substring(0, url.lastIndexOf('/')) + $('.timeline-comment-header-text .timestamp').last().attr('href');
-    var submitConfirmNotification = $('<div id="submitConfirmNotification" class="flash text-center">Comment Posted at <a href="'+ url +'">' + url + '</a></div>');
+    var submitConfirmNotification = $('<div id="submitConfirmNotification" class="flash text-center">'+
+                                      '<span class="octicon octicon-x flash-close js-flash-close"></span>'+
+                                      'Comment Posted at <a href="'+ url +'">' + url + '</a></div>');
     submitConfirmNotification.css({     
         position: 'fixed',
         width: '100%',
