@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          GitHub Code Review Checklist
 // @author        Paras Narang
-// @version       1.4
+// @version       1.5
 // @namespace     http://www.flipkart.com/
 // @description	  Code Review Checklist for Flipkart Warehouse team
 // @updateURL     https://github.com/parasnarang/GitHub-Code-Review-Checklist/raw/master/GitHub%20Code%20Review%20Checklist.user.js
@@ -141,6 +141,7 @@ function addReviewerTypeMenu() {
 
 function registerMenuToggle() {
     $('#shipItButton').click(function() {
+        $("#submitConfirmNotification").hide();
         $('#reviewerTypeMenu').toggle();
         $.each(['Functional', 'Technical', 'Performance'], function( index, reviewerType ) {
             if($('#' + reviewerType + 'Form').is(":visible")){
@@ -164,6 +165,19 @@ function createShipItComment(message) {
     var commentForm = $( "textarea[name='comment[body]']" ).first();
     commentForm.val(message);
     commentForm.closest("form").submit();
+
+    var url = $(location).attr('href');
+    url = url.substring(0, url.lastIndexOf('/')) + $('.timeline-comment-header-text .timestamp').last().attr('href');
+    var submitConfirmNotification = $('<div id="submitConfirmNotification" class="flash text-center">Comment Posted at <a href="'+ url +'">' + url + '</a></div>');
+    submitConfirmNotification.css({     
+        position: 'fixed',
+        width: '100%',
+        left: 0,
+        top: 0,
+        zIndex: 100,
+        borderTop: 0
+    });
+    $('body').prepend(submitConfirmNotification);
 }
 
 function constructShipItMessage(reviewerType) {
