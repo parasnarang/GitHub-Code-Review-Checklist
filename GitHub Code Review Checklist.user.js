@@ -164,7 +164,7 @@ function registerChecklistsToggle() {
 function createShipItComment(message) {
     var commentForm = $( "textarea[name='comment[body]']" ).first();
     commentForm.val(message);
-   // commentForm.closest("form").submit();
+    commentForm.closest("form").submit();
 
     var url = $(location).attr('href');
     url = url.substring(0, url.lastIndexOf('/')) + $('.timeline-comment-header-text .timestamp').last().attr('href');
