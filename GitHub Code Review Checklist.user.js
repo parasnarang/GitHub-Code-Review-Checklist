@@ -164,7 +164,7 @@ function createShipItComment(message) {
     commentForm.val(message);
     commentForm.closest("form").submit();
 
-    var url = $(location).attr('href').replace("/files", "").replace("/commits", ""); + $('.timeline-comment-header-text .timestamp').last().attr('href');
+    var url = $(location).attr('href').replace("/files", "").replace("/commits", "") + $('.timeline-comment-header-text .timestamp').last().attr('href');
     var submitConfirmNotification = $('<div id="submitConfirmNotification" class="flash text-center">'+
                                       '<span class="octicon octicon-x flash-close js-flash-close"></span>'+
                                       'Comment Posted at <a href="'+ url +'">' + url + '</a></div>');
