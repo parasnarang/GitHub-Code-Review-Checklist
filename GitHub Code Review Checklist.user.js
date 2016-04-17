@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          GitHub Code Review Checklist
 // @author        Paras Narang
-// @version       1.92
+// @version       2.0
 // @namespace     http://www.flipkart.com/
 // @description	  Code Review Checklist for Flipkart Warehouse team
 // @updateURL     https://github.com/parasnarang/GitHub-Code-Review-Checklist/raw/master/GitHub%20Code%20Review%20Checklist.user.js
@@ -77,6 +77,7 @@ function addReviewChecklists() {
                 '<input type="checkbox" value="' + value + '"> ' + value +
                 '</label>' +
                 '<a id="' + reviewerType + index + 'CommentButton" class="one-fifth column octicon octicon-comment" style="cursor: pointer; cursor: hand;">' +
+                '<svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path d="M15 2H6c-0.55 0-1 0.45-1 1v2H1c-0.55 0-1 0.45-1 1v6c0 0.55 0.45 1 1 1h1v3l3-3h4c0.55 0 1-0.45 1-1V10h1l3 3V10h1c0.55 0 1-0.45 1-1V3c0-0.55-0.45-1-1-1zM9 12H4.5l-1.5 1.5v-1.5H1V6h4v3c0 0.55 0.45 1 1 1h3v2z m6-3H13v1.5l-1.5-1.5H6V3h9v6z"></path></svg>' +
                 '</a>' +
                 '</div>' +
                 '<input type="text" class="input-mini input-block" style="display: none;" id="' + reviewerType + index + 'CommentInput" placeholder="Enter Comments here..">'
@@ -87,8 +88,8 @@ function addReviewChecklists() {
         $.each(checklistItems, function( index, checklistItem ) {
             checklistForm.append(checklistItem);
         });
-        var checklistSubmit = $('<center><a style="width:100%;" id="' + 
-                                reviewerType + 
+        var checklistSubmit = $('<center><a style="width:100%;" id="' +
+                                reviewerType +
                                 'ChecklistShipIt" class="btn btn-sm btn-primary tooltipped tooltipped-n" aria-label="Post Comment">Post Comment</a></center>');
         checklistForm.append(checklistSubmit);
         $('body').append(checklistForm);
@@ -143,7 +144,7 @@ function registerMenuToggle() {
         $('#reviewerTypeMenu').toggle();
         $.each(['Functional', 'Technical', 'Performance'], function( index, reviewerType ) {
             if($('#' + reviewerType + 'Form').is(":visible")){
-                $('#reviewerTypeMenu').hide(); 
+                $('#reviewerTypeMenu').hide();
                 $('#' + reviewerType + 'Form').hide();
             }
         });
@@ -168,7 +169,7 @@ function createShipItComment(message) {
     var submitConfirmNotification = $('<div id="submitConfirmNotification" class="flash text-center">'+
                                       '<span class="octicon octicon-x flash-close js-flash-close"></span>'+
                                       'Comment Posted at <a href="'+ url +'">' + url + '</a></div>');
-    submitConfirmNotification.css({     
+    submitConfirmNotification.css({
         position: 'fixed',
         width: '100%',
         left: 0,
@@ -227,6 +228,6 @@ function jquery_wait() {
     }
 }
 
-(function(){    
+(function(){
     jquery_wait();
 })();
